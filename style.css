@@ -1,0 +1,369 @@
+:root{
+  --ink:#1a2332;
+  --paper:#eef1f6;
+  --paper-dim:#dfe4ec;
+  --line:rgba(26,35,50,0.14);
+  --sun:#e8a33d;
+  --storm:#3d6b9e;
+  --dusk:#d9738f;
+  --good:#3d8a5f;
+  --panel-bg:rgba(255,255,255,0.35);
+  --fcard-bg:rgba(255,255,255,0.3);
+  font-size:16px;
+}
+
+[data-theme="dark"]{
+  --ink:#eef1f6;
+  --paper:#131923;
+  --paper-dim:#1c2530;
+  --line:rgba(238,241,246,0.14);
+  --sun:#f0b25a;
+  --storm:#6fa0cc;
+  --dusk:#e393a8;
+  --good:#5cb583;
+  --panel-bg:rgba(255,255,255,0.04);
+  --fcard-bg:rgba(255,255,255,0.035);
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'IBM Plex Mono', monospace;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  transition:background 0.3s ease, color 0.3s ease;
+}
+h1,h2,h3{
+  font-family:'Fraunces', serif;
+  margin:0;
+}
+.wrap{
+  max-width:900px;
+  margin:0 auto;
+  padding:0 24px 64px;
+}
+
+/* ---------- Sky band (signature element) ---------- */
+.skyband{
+  position:relative;
+  height:180px;
+  margin:0 -24px 0;
+  overflow:hidden;
+  background:linear-gradient(180deg, #7fb3d5, #eef1f6);
+  transition:background 1.4s ease;
+  border-bottom:1px solid var(--line);
+}
+.skyband svg{position:absolute;inset:0;width:100%;height:100%;}
+.skyband .caption{
+  position:absolute;
+  left:24px; bottom:12px;
+  font-size:0.72rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  opacity:0.75;
+  max-width:70%;
+}
+.skyband .reading{
+  position:absolute;
+  right:24px; bottom:10px;
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  font-size:2.1rem;
+}
+@media(max-width:600px){
+  .skyband{height:150px;margin:0 -16px 0;}
+  .skyband .reading{font-size:1.5rem;}
+  .skyband .caption{max-width:55%;}
+}
+
+/* ---------- Header / masthead ---------- */
+header.masthead{
+  padding:20px 24px 14px;
+  border-bottom:2px solid var(--ink);
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:0 -24px 28px;
+}
+header.masthead .title-block h1{
+  font-size:1.6rem;
+  font-weight:700;
+  letter-spacing:-0.01em;
+}
+header.masthead .title-block .sub{
+  font-size:0.7rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  opacity:0.6;
+  margin-top:2px;
+}
+.header-controls{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.unit-toggle{
+  display:flex;
+  border:1px solid var(--ink);
+  border-radius:3px;
+  overflow:hidden;
+  font-size:0.75rem;
+}
+.unit-toggle button{
+  background:transparent;
+  border:none;
+  padding:6px 12px;
+  cursor:pointer;
+  font-family:'IBM Plex Mono', monospace;
+  color:var(--ink);
+}
+.unit-toggle button.active{
+  background:var(--ink);
+  color:var(--paper);
+}
+.theme-toggle{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  border:1px solid var(--ink);
+  border-radius:3px;
+  padding:6px 12px;
+  background:transparent;
+  cursor:pointer;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:0.75rem;
+  color:var(--ink);
+}
+.theme-toggle:hover{background:var(--paper-dim);}
+.theme-toggle .icon{font-size:0.9rem; line-height:1;}
+
+/* ---------- Search / station log entry ---------- */
+.log-entry{
+  display:flex;
+  gap:10px;
+  margin-bottom:6px;
+  position:relative;
+}
+.log-entry input{
+  flex:1;
+  padding:12px 14px;
+  border:1px solid var(--ink);
+  border-radius:3px;
+  background:transparent;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:0.95rem;
+  color:var(--ink);
+}
+.log-entry input::placeholder{color:rgba(128,128,128,0.6);}
+.log-entry input:focus{outline:2px solid var(--storm); outline-offset:1px;}
+.log-entry button{
+  padding:12px 20px;
+  background:var(--ink);
+  color:var(--paper);
+  border:1px solid var(--ink);
+  border-radius:3px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:0.85rem;
+  letter-spacing:0.04em;
+  cursor:pointer;
+  text-transform:uppercase;
+}
+.log-entry button:hover{background:var(--storm); border-color:var(--storm);}
+.log-entry button:focus-visible, .log-entry input:focus-visible{outline:2px solid var(--storm);}
+.geo-btn{
+  padding:12px 14px;
+  background:transparent;
+  border:1px solid var(--ink);
+  border-radius:3px;
+  cursor:pointer;
+  font-size:1rem;
+}
+.suggestions{
+  position:absolute;
+  top:100%; left:0; right:0;
+  background:var(--paper);
+  border:1px solid var(--ink);
+  border-top:none;
+  z-index:10;
+  max-height:220px;
+  overflow-y:auto;
+  display:none;
+}
+.suggestions.show{display:block;}
+.suggestions button{
+  width:100%;
+  text-align:left;
+  padding:10px 14px;
+  background:none;
+  border:none;
+  border-bottom:1px solid var(--line);
+  font-family:'IBM Plex Mono', monospace;
+  font-size:0.82rem;
+  color:var(--ink);
+  cursor:pointer;
+}
+.suggestions button:hover{background:var(--paper-dim);}
+
+.status-line{
+  font-size:0.75rem;
+  opacity:0.6;
+  margin:8px 0 24px;
+  min-height:1em;
+}
+.status-line.error{color:#c9584f; opacity:1;}
+
+/* ---------- Current reading panel ---------- */
+.panel{
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:24px;
+  margin-bottom:28px;
+  background:var(--panel-bg);
+}
+.panel-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  flex-wrap:wrap;
+  gap:16px;
+  margin-bottom:20px;
+}
+.place-name{
+  font-size:1.5rem;
+  font-weight:600;
+}
+.place-meta{
+  font-size:0.72rem;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  opacity:0.6;
+  margin-top:4px;
+}
+.temp-big{
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  font-size:3.2rem;
+  line-height:1;
+  text-align:right;
+}
+.temp-big .cond{
+  display:block;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:0.78rem;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  font-weight:500;
+  margin-top:6px;
+  opacity:0.75;
+}
+.readouts{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(120px,1fr));
+  gap:14px;
+  border-top:1px dashed var(--line);
+  padding-top:18px;
+}
+.readout{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.readout .label{
+  font-size:0.65rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  opacity:0.55;
+}
+.readout .value{
+  font-size:1.15rem;
+  font-weight:500;
+}
+
+.dial-wrap{display:flex; align-items:center; gap:10px;}
+.dial-wrap svg{flex-shrink:0;}
+
+/* ---------- Forecast strip ---------- */
+.section-label{
+  font-size:0.72rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  opacity:0.6;
+  margin:0 0 12px;
+  border-bottom:1px solid var(--line);
+  padding-bottom:8px;
+}
+.forecast-strip{
+  display:grid;
+  grid-template-columns:repeat(5, 1fr);
+  gap:10px;
+  margin-bottom:28px;
+}
+@media(max-width:640px){
+  .forecast-strip{grid-template-columns:repeat(3,1fr); }
+}
+.fcard{
+  border:1px solid var(--line);
+  border-radius:5px;
+  padding:14px 10px;
+  text-align:center;
+  background:var(--fcard-bg);
+}
+.fcard .day{
+  font-size:0.72rem;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  opacity:0.65;
+  margin-bottom:8px;
+}
+.fcard svg{width:34px;height:34px;margin-bottom:6px;}
+.fcard .hi{font-weight:600; font-size:1rem;}
+.fcard .lo{opacity:0.55; font-size:0.85rem;}
+
+/* ---------- footer strip: sunrise/sunset ---------- */
+.sun-strip{
+  display:flex;
+  justify-content:space-between;
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:16px 20px;
+  margin-bottom:20px;
+  font-size:0.85rem;
+}
+.sun-strip div{display:flex; flex-direction:column; gap:2px;}
+.sun-strip .label{font-size:0.62rem; letter-spacing:0.08em; text-transform:uppercase; opacity:0.55;}
+
+.favorites{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:8px;
+}
+.fav-chip{
+  padding:6px 12px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  font-size:0.72rem;
+  background:transparent;
+  cursor:pointer;
+  color:var(--ink);
+}
+.fav-chip:hover{border-color:var(--ink);}
+.fav-chip .star{color:var(--sun);}
+
+.empty-state{
+  text-align:center;
+  padding:60px 20px;
+  opacity:0.6;
+  font-size:0.85rem;
+}
+
+::-webkit-scrollbar{width:8px;}
+::-webkit-scrollbar-thumb{background:var(--line); border-radius:4px;}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important; transition:none !important;}
+}

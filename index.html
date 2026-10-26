@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Station Log — Weather</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="skyband" id="skyband">
+  <svg id="skysvg" viewBox="0 0 900 180" preserveAspectRatio="none"></svg>
+  <div class="caption" id="skyCaption">Log a city below to take a reading.</div>
+  <div class="reading" id="skyReading"></div>
+</div>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="title-block">
+      <h1>Station Log</h1>
+      <div class="sub">A field record of the sky, anywhere</div>
+    </div>
+    <div class="header-controls">
+      <div class="unit-toggle" role="group" aria-label="Temperature unit">
+        <button id="unitC" class="active">°C</button>
+        <button id="unitF">°F</button>
+      </div>
+      <button class="theme-toggle" id="themeToggle" aria-pressed="false">
+        <span class="icon" id="themeIcon">🌙</span>
+        <span id="themeLabel">Dark</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="log-entry">
+    <input type="text" id="cityInput" placeholder="Enter a city — e.g. Patna, Kyoto, Lisbon" autocomplete="off">
+    <button id="geoBtn" class="geo-btn" title="Use current location" aria-label="Use current location">📍</button>
+    <button id="searchBtn">Log it</button>
+    <div class="suggestions" id="suggestions"></div>
+  </div>
+  <div class="status-line" id="statusLine"></div>
+
+  <div class="favorites" id="favorites"></div>
+
+  <div id="content">
+    <div class="empty-state" id="emptyState">No entries yet. Search a city to begin the log — this station reads live sky data, no key required.</div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
